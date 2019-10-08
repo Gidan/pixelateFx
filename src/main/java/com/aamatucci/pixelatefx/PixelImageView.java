@@ -1,7 +1,9 @@
 package com.aamatucci.pixelatefx;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.*;
 import javafx.scene.layout.Pane;
 
@@ -21,11 +23,12 @@ public class PixelImageView extends Pane {
         this.getChildren().add(imageView);
 
         imageView.fitWidthProperty().bind(this.widthProperty());
+        imageView.fitHeightProperty().bind(this.heightProperty());
         imageView.setPreserveRatio(true);
 
         this.image.addListener((observable, oldValue, image) -> {
-            if (image != null){
-                writableImage = new WritableImage((int)image.getWidth(), (int)image.getHeight());
+            if (image != null) {
+                writableImage = new WritableImage((int) image.getWidth(), (int) image.getHeight());
                 imageView.setImage(writableImage);
                 pixelReader = image.getPixelReader();
                 pixelWriter = writableImage.getPixelWriter();
@@ -34,14 +37,13 @@ public class PixelImageView extends Pane {
         });
 
         pixelSize.addListener(obs -> pixelate());
-        this.widthProperty().addListener(obs -> pixelate());
-        this.heightProperty().addListener(obs -> pixelate());
+
     }
 
     private void pixelate() {
-        if (pixelReader != null && pixelWriter != null) {
-            int imageW = (int) getWidth();
-            int imageH = (int) getHeight();
+        if (pixelReader != null && pixelWriter != null && image.get() != null && pixelSize.get() > 0) {
+            int imageW = (int) image.get().getWidth();
+            int imageH = (int) image.get().getHeight();
             int pixelSize = this.pixelSize.get();
             for (int x = 0; x < imageW; x += pixelSize) {
                 for (int y = 0; y < imageH; y += pixelSize) {
@@ -59,11 +61,11 @@ public class PixelImageView extends Pane {
                                  final int startY,
                                  final int w,
                                  final int h) {
+        final int len = w * h;
         int red = 0;
         int green = 0;
         int blue = 0;
         final int alpha = 255;
-        final int len = w * h;
         final int[] pixels = new int[len];
         final WritablePixelFormat<IntBuffer> format = PixelFormat.getIntArgbInstance();
         pixelReader.getPixels(startX, startY, w, h, format, pixels, 0, w);
@@ -80,9 +82,10 @@ public class PixelImageView extends Pane {
         final int c = (alpha << 24) + (red << 16) + (green << 8) + blue;
         Arrays.fill(pixels, c);
         pixelWriter.setPixels(startX, startY, w, h, format, pixels, 0, w);
+
     }
 
-    public void setImage(Image image){
+    public void setImage(Image image) {
         this.image.set(image);
     }
 
