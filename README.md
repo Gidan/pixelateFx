@@ -6,3 +6,6 @@ Example JavaFX application to demonstrate Image Pixelation effect.
 
 ### Run
 `mvn javafx:run`
+
+## Preview
+![](preview.gif)
