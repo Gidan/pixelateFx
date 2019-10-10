@@ -12,7 +12,7 @@
 
     <PixelImageView fx:id="pixelImageView"
                     AnchorPane.bottomAnchor="20"
-                    AnchorPane.topAnchor="20"
+                    AnchorPane.topAnchor="10"
                     AnchorPane.leftAnchor="20"
                     AnchorPane.rightAnchor="20"
                     minPixelSize="5"
