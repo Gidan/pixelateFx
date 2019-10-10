@@ -1,5 +1,5 @@
 # PixelateFX
-Example JavaFX application that does image pixelation.
+Example JavaFX application to demonstrate Image Pixelation effect.
 
 ### Compile
 `mvn javafx:compile`

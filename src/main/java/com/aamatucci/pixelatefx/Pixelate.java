@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Pixelate extends Application {
@@ -17,6 +16,7 @@ public class Pixelate extends Application {
     }
 
     @FXML
+    private
     Slider slider;
 
     @FXML

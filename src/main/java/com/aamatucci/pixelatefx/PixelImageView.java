@@ -103,7 +103,7 @@ public class PixelImageView extends StackPane {
 
     }
 
-    public void setImage(Image image) {
+    void setImage(Image image) {
         this.image.set(image);
     }
 
