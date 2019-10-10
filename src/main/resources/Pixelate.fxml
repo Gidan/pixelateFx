@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
+<?import com.aamatucci.pixelatefx.PixelImageView?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.control.Label?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            >
+>
+
+    <PixelImageView fx:id="pixelImageView" AnchorPane.bottomAnchor="0"
+                    AnchorPane.topAnchor="0"
+                    AnchorPane.leftAnchor="0"
+                    AnchorPane.rightAnchor="0"
+
+
+    />
+
+    <Slider fx:id="slider"
+            min="2"
+            max="50"
+
+            AnchorPane.leftAnchor="30"
+            AnchorPane.topAnchor="30"/>
+
+    <Label text="${pixelImageView.pixelSize}" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="30" />
 
 </AnchorPane>

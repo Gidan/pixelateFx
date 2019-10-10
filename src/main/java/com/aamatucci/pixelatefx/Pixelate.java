@@ -1,6 +1,9 @@
 package com.aamatucci.pixelatefx;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -13,28 +16,27 @@ public class Pixelate extends Application {
         Application.launch(args);
     }
 
+    @FXML
+    Slider slider;
+
+    @FXML
+    private
+    PixelImageView pixelImageView;
+
     public void start(final Stage primaryStage) throws Exception {
-        final AnchorPane root = new AnchorPane();
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/Pixelate.fxml"));
+        fxmlLoader.setController(this);
+        Parent root = fxmlLoader.load();
+
         primaryStage.setScene(new Scene(root, 1000, 500));
         primaryStage.show();
+    }
 
+    @FXML
+    private void initialize() {
         final Image originalImage = new Image(this.getClass().getResource("/clouds.jpg").toExternalForm());
-
-        final Slider slider = new Slider(5, 50, 5);
-
-
-        PixelImageView pixelImageView = new PixelImageView();
-        AnchorPane.setLeftAnchor(pixelImageView, .0);
-        AnchorPane.setTopAnchor(pixelImageView, .0);
-        AnchorPane.setRightAnchor(pixelImageView, .0);
-        AnchorPane.setBottomAnchor(pixelImageView, .0);
-        root.getChildren().add(pixelImageView);
-        root.getChildren().add(slider);
-
         pixelImageView.pixelSizeProperty().bind(slider.valueProperty());
         pixelImageView.setImage(originalImage);
-
-
     }
 
 
