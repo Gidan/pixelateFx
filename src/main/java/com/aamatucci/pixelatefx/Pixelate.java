@@ -27,6 +27,7 @@ public class Pixelate extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/Pixelate.fxml"));
         fxmlLoader.setController(this);
         Parent root = fxmlLoader.load();
+        primaryStage.setTitle("PixelateFX");
 
         primaryStage.setScene(new Scene(root, 1000, 500));
         primaryStage.show();
