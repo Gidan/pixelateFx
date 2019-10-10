@@ -14,11 +14,16 @@ public class PixelImageView extends StackPane {
 
     private static final int ALPHA = 255 << 24;
     private static final WritablePixelFormat<IntBuffer> FORMAT = PixelFormat.getIntArgbInstance();
+    private final ImageView imageView;
 
-    public int getPixelSize() {
-        return pixelSize.get();
-    }
+    /**
+     * Minimum pixel size. Below this value, the pixelation is not applied.
+     */
+    private IntegerProperty minPixelSize = new SimpleIntegerProperty(5);
 
+    /**
+     * Pixel size value to determine how strong is the pixelation effect.
+     */
     private IntegerProperty pixelSize = new SimpleIntegerProperty();
     private ObjectProperty<Image> image = new SimpleObjectProperty<>();
     private WritableImage writableImage;
@@ -26,7 +31,7 @@ public class PixelImageView extends StackPane {
     private PixelWriter pixelWriter;
 
     public PixelImageView() {
-        ImageView imageView = new ImageView();
+        imageView = new ImageView();
         this.getChildren().add(imageView);
 
         imageView.fitWidthProperty().bind(this.widthProperty());
@@ -36,7 +41,6 @@ public class PixelImageView extends StackPane {
         this.image.addListener((observable, oldValue, image) -> {
             if (image != null) {
                 writableImage = new WritableImage((int) image.getWidth(), (int) image.getHeight());
-                imageView.setImage(writableImage);
                 pixelReader = image.getPixelReader();
                 pixelWriter = writableImage.getPixelWriter();
                 pixelate();
@@ -49,17 +53,23 @@ public class PixelImageView extends StackPane {
 
     private void pixelate() {
         Image image = this.image.get();
-        int pixelsize = pixelSize.get();
-        if (pixelReader != null && pixelWriter != null && image != null && pixelsize > 0) {
-            int imageW = (int) image.getWidth();
-            int imageH = (int) image.getHeight();
-            int w;
-            int h;
-            for (int x = 0; x < imageW; x += pixelsize) {
-                for (int y = 0; y < imageH; y += pixelsize) {
-                    w = x + pixelsize > imageW ? imageW - x : pixelsize;
-                    h = y + pixelsize > imageH ? imageH - y : pixelsize;
-                    PixelImageView.pixelate(pixelReader, pixelWriter, x, y, w, h);
+        int pixel = pixelSize.get();
+        if (pixelReader != null && pixelWriter != null && image != null ) {
+            if (pixel < minPixelSize.get()){
+                imageView.setImage(image);
+            }
+            else {
+                imageView.setImage(writableImage);
+                int imageW = (int) image.getWidth();
+                int imageH = (int) image.getHeight();
+                int w;
+                int h;
+                for (int x = 0; x < imageW; x += pixel) {
+                    for (int y = 0; y < imageH; y += pixel) {
+                        w = x + pixel > imageW ? imageW - x : pixel;
+                        h = y + pixel > imageH ? imageH - y : pixel;
+                        PixelImageView.pixelate(pixelReader, pixelWriter, x, y, w, h);
+                    }
                 }
             }
         }
@@ -103,5 +113,21 @@ public class PixelImageView extends StackPane {
 
     public void setPixelSize(int p){
         this.pixelSize.set(p);
+    }
+
+    public int getPixelSize() {
+        return pixelSize.get();
+    }
+
+    public int getMinPixelSize() {
+        return minPixelSize.get();
+    }
+
+    public IntegerProperty minPixelSizeProperty() {
+        return minPixelSize;
+    }
+
+    public void setMinPixelSize(int minPixelSize) {
+        this.minPixelSize.set(minPixelSize);
     }
 }

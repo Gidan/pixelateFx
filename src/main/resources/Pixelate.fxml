@@ -4,25 +4,37 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
 >
 
-    <PixelImageView fx:id="pixelImageView" AnchorPane.bottomAnchor="0"
-                    AnchorPane.topAnchor="0"
-                    AnchorPane.leftAnchor="0"
-                    AnchorPane.rightAnchor="0"
-
-
+    <PixelImageView fx:id="pixelImageView"
+                    AnchorPane.bottomAnchor="20"
+                    AnchorPane.topAnchor="20"
+                    AnchorPane.leftAnchor="20"
+                    AnchorPane.rightAnchor="20"
+                    minPixelSize="5"
     />
 
-    <Slider fx:id="slider"
-            min="2"
-            max="50"
+    <StackPane
+            style="-fx-background-color: rgba(255, 255, 255, 0.8)"
+            AnchorPane.leftAnchor="0"
+            AnchorPane.bottomAnchor="0"
+            AnchorPane.rightAnchor="0">
+        <padding>
+            <Insets top="20" bottom="20"/>
+        </padding>
+        <HBox alignment="CENTER" spacing="10" >
+            <Text>Pixel size:</Text>
+            <Slider fx:id="slider"
+                    min="0"
+                    max="50"
+            />
+            <Label text="${pixelImageView.pixelSize}" prefWidth="50"/>
+        </HBox>
+    </StackPane>
 
-            AnchorPane.leftAnchor="30"
-            AnchorPane.topAnchor="30"/>
-
-    <Label text="${pixelImageView.pixelSize}" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="30" />
 
 </AnchorPane>
