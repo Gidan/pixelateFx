@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Button?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
 >
@@ -35,6 +36,8 @@
             <Label text="${pixelImageView.pixelSize}" prefWidth="50"/>
         </HBox>
     </StackPane>
+
+    <Button fx:id="btnFileChooser" text="choose file" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10"/>
 
 
 </AnchorPane>
